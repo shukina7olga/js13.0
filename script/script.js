@@ -1,11 +1,19 @@
-let money = 1000;
-let income = 40000;
-let addExpenses = 500;
-let deposit = 20000;
-let mission = 'Learn js';
-let period = 1.5;
+let money = 900000,
+    income = 'фриланс',
+    addExpenses = 'Продукты, Учеба, ЖКХ',
+    deposit = true,
+    mission = Infinity,
+    period = 5,
+    budgetDay;
 
-console.log('money: ', money);
-console.log(mission);
+console.log(' money: ', typeof money, '\n', 'income: ',
+     typeof income, '\n', 'deposit: ', typeof deposit);
 
-alert(period);
+console.log(addExpenses.length);
+
+console.log('Период равен:', period, 'месяцев', 'Цель: заработать', mission, 'рублей');
+
+console.log(addExpenses.toLowerCase().split(','));
+
+console.log('budgetDay: ', budgetDay = money/30);
+
