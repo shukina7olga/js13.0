@@ -1,19 +1,20 @@
-let money = 900000,
-    income = 'фриланс',
-    addExpenses = 'Продукты, Учеба, ЖКХ',
-    deposit = true,
-    mission = Infinity,
-    period = 5,
-    budgetDay;
+let num = 266219,
+    arr,
+    result = 1;
 
-console.log(' money: ', typeof money, '\n', 'income: ',
-     typeof income, '\n', 'deposit: ', typeof deposit);
+arr = num.toString().split(''); // привели число к типу строка и сделали массив из элементов строки
 
-console.log(addExpenses.length);
+for (let i = 0; i < arr.length; i++) {
+    arr[i]++;  // сделано приведение типа из строки в число
+    arr[i]--;  // обратно отнимаем по единице
+    //console.log(arr[i] , typeof arr[i]); // вывод, чтобы убедиться в типе каждого элемента
+    result *= arr[i];
+};
 
-console.log('Период равен:', period, 'месяцев', 'Цель: заработать', mission, 'рублей');
+console.log('Результатом умножения цифр', num, 'является число', result, 'и его тип', typeof result); 
 
-console.log(addExpenses.toLowerCase().split(','));
+result **= 3;
+console.log('Возведение в третью степень результата:', result);
 
-console.log('budgetDay: ', budgetDay = money/30);
-
+console.log('Первые две цифры этого числа:', result.toString().substr(0, 2)); 
+// 0 - с какого элемента вывод, 2 - сколько вывести элементов
