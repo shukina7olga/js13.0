@@ -1,79 +1,44 @@
 'use strict';
-let money,
-    income = 'фриланс',
-    addExpenses,
-    deposit,
-    mission = 900000,
-    period = 5,
-    budgetDay,
-    expenses1,
-    amount1,
-    expenses2,
-    amount2,
-    budgetMonth,
-    month;
+let lang = document.getElementsByTagName('html')[0].getAttribute('lang');
 
-//пункт_3_4 спрашиваем данные у пользователя через поле ввода в модалке
-money = prompt('Ваш месячный доход');
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
-deposit = confirm('Есть ли у вас депозит в банке?');
-//пункт_5 доп вопросы
-expenses1 = prompt('Введите обязательную статью расходов');
-amount1 = prompt('Во сколько это ообйдется?');
-expenses2 = prompt('Введите обязательную статью расходов');
-amount2 = prompt('Во сколько это обойдется?');
-
-//пункт_6 вычисляем бюджет на месяц
-budgetMonth = money - (+amount1 + (+amount2));
-//альтернатива budgetMonth = money - (Number(amount1) + Number(amount2));
-
-//пункт_7 за сколько месяцев достигнем цели
-month = mission/budgetMonth;
-
-//пункт_8 деньги на день
-budgetDay = budgetMonth/30;
+if (lang === "ru") {
+    console.log('понедельник вторник среда четверг пятница суббота воскресение');
+} else {
+    console.log('monday tuesday wednesday thursday friday saturday sunday');
+}
 
 
-
-//из 2 домашки
-console.log(' Месячный доход money: ', typeof money, '\n', 'Дополнительный доход income: ',
-     typeof income, '\n', 'Есть депозит в банке? deposit: ', typeof deposit);
-console.log('Длина введенной строки', addExpenses.length);
-console.log('Период равен:', period, 'месяцев', 'Цель: заработать', mission, 'рублей');
-console.log('Разбили строку на массив из строк', addExpenses.toLowerCase().split(','));
-
-//из 3 домашки
-console.log('Месячный доход:', money, '\n', addExpenses, '\n','Есть депозит в банке? deposit:', deposit, '\n',
-    expenses1, ':', amount1,'\n', expenses2,':', amount2);
-console.log('Бюджет на месяц:', budgetMonth);
-console.log('Месяцев, что бы накопить', mission, 'будет', Math.ceil(month));
-console.log('Бюджет на 1 день:', Math.floor(budgetDay));
-
-//пункт_9 
-if (budgetDay > 1200) {
-    console.log('У вас высокий уровень дохода');
-} else if (1200 >= budgetDay >= 600) {     //budgetDay > 600 && budgetDay < 1200 
-    console.log('У вас средний уровень дохода');
-} else if (budgetDay > 600 || budgetDay === 0) {
-    console.log('К сожалению у вас уровень дохода ниже среднего');
-} else if (budgetDay < 0) {
-    console.log('Что то пошло не так');
-} 
-
-/* Тут ведь нельзя использовать swich из-за того, что в скобках "switch (budgetDay)" 
-    должно присутствовать именно булево значение? Или в скобки просто надо было прописать что-то другое?
-
-switch (budgetDay) { 
-    case budgetDay > 1200:
-        console.log('У вас высокий уровень дохода');
+switch (lang) {
+    case "ru":
+        console.log('понедельник вторник среда четверг пятница суббота воскресение');
         break;
-    case budgetDay > 600 && budgetDay < 1200:
-        console.log('У вас средний уровень дохода');
+    default:
+        console.log('monday tuesday wednesday thursday friday saturday sunday');
         break;
-    case budgetDay > 600 || 0:
-        console.log('К сожалению у вас уровень дохода ниже среднего');
-        break;
-    case budgetDay < 0: 
-        console.log('Что то пошло не так');
-        break;
-} */
+}
+
+
+
+let arr = [['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресение'],
+            ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']];
+
+let i = 7;
+while (lang === "ru" && i === 7) { 
+  console.log(arr[0][0], arr[0][1], arr[0][2], arr[0][3], arr[0][4], arr[0][5], arr[0][6]);
+  i --; // для выхода из цикла. иначе пипец, будет бесконечно крутить
+}
+
+while (lang === "en" && i === 7) { 
+    console.log(arr[1][0], arr[1][1], arr[1][2], arr[1][3], arr[1][4], arr[1][5], arr[1][6]);
+    i --;
+}
+
+/* альтернатива второму заданию
+let namePerson = prompt('Ты хто?'), n, b, a;
+a = (namePerson === 'Артем') ? console.log('директор') : n ;
+n = (namePerson === 'Максим') ? console.log('преподаватель') : b;
+b = (namePerson !== 'Артем' && namePerson !== 'Максим') ? console.log('студент') : a ; 
+*/
+
+let namePerson = prompt('Ты хто по жизни?');
+(namePerson === 'Артем') ? console.log('директор') : (namePerson === 'Максим') ? console.log('преподаватель') : console.log('студент'); 
