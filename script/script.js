@@ -1,15 +1,15 @@
 'use strict';
-let money = prompt('Ваш месячный доход'),
+let money = +prompt('Ваш месячный доход'),
     income = 'фриланс',
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую'),
     deposit = confirm('Есть ли у вас депозит в банке?'),
     mission = 900000,
     period = 5,
     expenses1 = prompt('Введите обязательную статью расходов'),
-    amount1 = prompt('Во сколько это ообйдется?'),
+    amount1 = +prompt('Во сколько это ообйдется?'),
     expenses2 = prompt('Введите обязательную статью расходов'),
-    amount2 = prompt('Во сколько это обойдется?'),
-    budgetMonth = money - (+amount1 + (+amount2)), //пункт_6 вычисляем бюджет на месяц  альтернатива budgetMonth = money - (Number(amount1) + Number(amount2));
+    amount2 = +prompt('Во сколько это обойдется?'),
+    budgetMonth = money - (amount1 + amount2), //пункт_6 вычисляем бюджет на месяц  альтернатива budgetMonth = money - (Number(amount1) + Number(amount2));
     budgetDay = budgetMonth/30,//пункт_8 деньги на день
     month = mission/budgetMonth; //пункт_7 за сколько месяцев достигнем цели
 
@@ -23,8 +23,8 @@ switch (true) {
     case budgetDay > 600 || 0:
         console.log('К сожалению у вас уровень дохода ниже среднего');
         break;
-    case budgetDay < 0: 
-        console.log('Что то пошло не так');
+    default:
+        console.log('Хьюстон, у вас проблемы!');
         break;
 }
 /*пункт_9 альтернатива
