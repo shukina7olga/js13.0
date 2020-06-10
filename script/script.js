@@ -52,8 +52,3 @@ console.log('Рассходы за месяц', ExpensesMonth);
 console.log('Разбили строку на массив из строк', addExpenses.toLowerCase().split(','));
 console.log('Месяцев, что бы накопить', mission, 'будет', Math.ceil(month));
 console.log('Бюджет на 1 день:', Math.floor(budgetDay));
-
-
-
-
-
