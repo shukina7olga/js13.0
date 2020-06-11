@@ -33,7 +33,7 @@ const getExpensesMonth = function() { //сумма всех обязательн
         do {
             count = +prompt('Во сколько это обойдется?');
         } while(!isNumber(count));
-        sum += count;
+        sum += count; 
     }
     return sum;
 };
