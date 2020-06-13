@@ -1,80 +1,41 @@
 'use strict';
-let isNumber = function(n) { // принимает число и возвращает + или -
-    return !isNaN(parseFloat(n)) && isFinite(n); // ! чтобы +если число, - если стр
-}; // isFinite(n) если число бесконечно, то вернет -
+let arr = ['334', '234', '444', '32', '234', '444', '32',];
 
-let money,
-    income = 'фриланс',
-    addExpenses,
-    deposit,
-    mission = 900000,
-    period = 5,
-    expenses = [],
-    expensesAmount,
-    accumulatedMonth,
-    budgetDay,
-    month;
-
-const start = function() {
-    do{
-        money = +prompt('Ваш месячный доход'); 
-    } while (!isNumber(money));
-};
-start();
-
-const showTypeOf = function(data) {
-   console.log('Значение переменной', data, 'тип этой переменной', typeof(data)); 
-};
-const getExpensesMonth = function() { //сумма всех обязательных расходов за мес
-    let sum = 0;
-    let count;
-    for (let i = 0; i < 2; i++) {
-        expenses[i] = prompt('Введите обязательную статью расходов');
-        do {
-            count = +prompt('Во сколько это обойдется?');
-        } while(!isNumber(count));
-        sum += count; 
+console.log(arr, typeof arr);
+for (let i = 0; i < arr.length; i++) {
+    arr[i].split('');
+    //arr[i] = Number.parseInt(arr[i]);
+    console.log(arr[i], typeof arr[i]);
+    //console.log(q);
+    for (let j = 0; j < arr[i].length; j++) {
+        arr[i][j] = Number.parseInt(arr[i][j]);
+        console.log(arr[i][j], typeof arr[i][j]);
     }
-    return sum;
-};
-const getAccumulatedMonth = function(money, expensesAmount) { //накопления за месяц
-    return money - expensesAmount;
-};
-const getTargetMonth = function(mission, accumulatedMonth) { // результат месячного накопления
-    return mission / accumulatedMonth;
-};
-const getStatusIncome = function() {
-    if (budgetDay > 1200) {
-        return('У вас высокий уровень дохода');
-    } else if (1200 >= budgetDay >= 600) {     //budgetDay > 600 && budgetDay < 1200 
-        return('У вас средний уровень дохода');
-    } else if (budgetDay > 600 || budgetDay === 0) {
-        return('К сожалению, у вас уровень дохода ниже среднего');
-    } else if (budgetDay < 0) {
-        return('Что-то пошло не так');
-    }
-};
-
-
-addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
-deposit = confirm('Есть ли у вас депозит в банке?');
-expensesAmount = getExpensesMonth();
-accumulatedMonth = getAccumulatedMonth(money, expensesAmount);
-month = getTargetMonth(mission, accumulatedMonth);
-if (month < 0) {
-    console.log('Цель не будет достигнута');
-} else {
-    console.log('Цель осуществима');
+    
 }
+/*
+let a = arr[0].split('');
+let b = arr[1].split('');
+let c = arr[2].split('');
+let d = arr[3].split('');
+let e = arr[4].split('');
+let f = arr[5].split('');
+let g = arr[6].split('');
 
-budgetDay = accumulatedMonth / 30;
 
-showTypeOf(money);
-showTypeOf(income);
-showTypeOf(deposit);
+console.log(a, typeof a);
+console.log(b, typeof b);
+console.log(c, typeof c);
+console.log(d, typeof d);
+console.log(e, typeof e);
+console.log(f, typeof f);
+console.log(g, typeof g);
 
-console.log(getStatusIncome());
-console.log('Рассходы за месяц', +expensesAmount);
-console.log('Разбили строку на массив из строк', addExpenses.toLowerCase().split(','));
-console.log('Месяцев, что бы накопить', mission, 'будет', Math.ceil(month));
-console.log('Бюджет на 1 день:', Math.floor(budgetDay));
+
+
+
+
+    if(arr[0] === 2 || arr[0] === 4) {
+         c
+    }
+*/
