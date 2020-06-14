@@ -1,14 +1,15 @@
 'use strict';
-let arr = ['334', '234', '444', '32', '234', '444', '32',];
-
+let arr = ['634', '234', '4574', '32', '234', '8490', '32',];
 console.log(arr, typeof arr);
+
 for (let i = 0; i < arr.length; i++) {
     arr[i].split('');
     //arr[i] = Number.parseInt(arr[i]);
-    console.log(arr[i], typeof arr[i]);
-    //console.log(q);
+    
+    //console.log(arr[i], typeof arr[i]);
     for (let j = 0; j < arr[i].length; j++) {
-        arr[i][j] = Number.parseInt(arr[i][j]);
+        //let a = arr[i][j].substring(1,0);
+        //arr[i][j] = Number.parseInt(arr[i][j]);
         console.log(arr[i][j], typeof arr[i][j]);
     }
     
