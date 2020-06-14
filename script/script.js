@@ -14,13 +14,29 @@ console.log(arr, typeof arr);
 
 arr.forEach((item) => {
     if (item.startsWith('2') || item.startsWith('4')) {
-      console.log('Числа начинающиеся на 2 или 4', item, typeof item);
+      console.log('Число начинающиеся на 2 или 4: ', item, typeof item);
     }
   });
+
+//let i;
+//while( i >= 100) {
+//    i++;
+for (let i = 2; i <= 100; i++) { // Для всех i...
+
+    for (let j = 2; j < i; j++) { // проверить, делится ли число..
+      if (arr[i] / arr[i] !== 1 && arr[i] / 1 !== arr[i]) {
+        continue; // не подходит, берём следующее 
+      } 
+      console.log( arr[i] );
+    } 
+  
+    console.log( arr[i] ); // простое число
+}
+//}
 /*
 let arr = ['634', '234', '4574', '32', '234', '8490', '32',];
 
-
+arr[i] / arr[i] !=== 1 && arr[i] / 1 !== arr[i]
 
 for (let i = 0; i < arr.length; i++) {
     let a = arr[i].split('');
