@@ -1,16 +1,38 @@
 'use strict';
-let arr = ['634', '234', '4574', '32', '234', '8490', '32',];
+let arr = []; // создаем массив
+    for(let i=0; i < 7; i++) {
+
+        arr[i] = prompt('Введите число').trim(); // Заполняем массив
+        console.log(arr[i], typeof arr[i]);
+
+        if(arr[i] === '') { // если  имя не введено
+            arr[i] = prompt('Введите число').trim(); 
+        }
+        
+    }
 console.log(arr, typeof arr);
 
+arr.forEach((item) => {
+    if (item.startsWith('2') || item.startsWith('4')) {
+      console.log('Числа начинающиеся на 2 или 4', item, typeof item);
+    }
+  });
+/*
+let arr = ['634', '234', '4574', '32', '234', '8490', '32',];
+
+
+
 for (let i = 0; i < arr.length; i++) {
-    arr[i].split('');
-    //arr[i] = Number.parseInt(arr[i]);
-    
-    //console.log(arr[i], typeof arr[i]);
-    for (let j = 0; j < arr[i].length; j++) {
+    let a = arr[i].split('');
+    //a[i] = Number.parseInt(arr[i]);
+    //console.log(arr[i] = Number.parseInt(arr[i]), typeof arr);
+    //console.log(arr[4] = Number.parseInt(arr[4]), typeof arr[4]);
+    //console.log(a[i], typeof a[i]);
+    for (let j = 0; j < a[i].length; j++) {
         //let a = arr[i][j].substring(1,0);
-        //arr[i][j] = Number.parseInt(arr[i][j]);
-        console.log(arr[i][j], typeof arr[i][j]);
+        a[i][j] = Number.parseInt(a[i][j]);
+        
+        console.log(a[i][j], typeof a[i][j]);
     }
     
 }
