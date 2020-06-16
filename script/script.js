@@ -7,7 +7,7 @@ let isNumber = function(n) { // принимает число и возвращ�
 let money;
 const start = function() {
     do{
-        money = +prompt('Ваш месячный доход'); 
+        money = +prompt('Ваш месячный доход', 90000); 
     } while (!isNumber(money));
 };
 start();
@@ -18,23 +18,42 @@ let appData = { // объект, содержащий все созданные 
     expenses: {}, //обязательные расходы . объект
     addExpenses: [], // возможные расходы
     deposit: false, // депозит в банке
+    percentDeposit: 0, // процент депозита
+    moneyDeposit: 0, // сколько человек денег заложил
     mission: 50000, // цель накопить денег
-    period: 5,
+    period: 3, // 
     budget: {},
     budgetDay: 0,
     budgetMonth: 0,
     expensesMonth: 0, //сумма всех обязательных расходов за месяц
     month: 0,
     asking: function(){ // метод, спрашивающий у пользователя возможные расходы, депозит, обязательные расходы // НИЧЕГО НЕ ВОЗВРАЩАЕТ, А ДОБАВЛЯЕТ ЗНАЧЕНИЕ В ОБЪЕКТ
-        let addExpenses  = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
+        
+        if(confirm('Есть ли у вас дополнительный зароботок?')){
+            let itemIncome, cashIncome;
+            do{
+                itemIncome = prompt('Какой у вас дополнительный зароботок?', 'фриланс');  
+            } while (isNumber(itemIncome));
+            do{
+                cashIncome = prompt('Сколько на этом зарабатываете?', 10000);
+            } while (!isNumber(cashIncome));     
+            appData.income[itemIncome] = cashIncome;
+        }
+
+        let addExpenses;
+        do{
+            addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Еда, Вода, ЖКХ');        
+        } while (isNumber(addExpenses));    
         appData.addExpenses = addExpenses.toLowerCase().split(',');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
         let expense;
         let count;
         for (let i = 0; i < 2; i++) {
-            expense = prompt('Введите обязательную статью расходов');    
+            do{
+                expense = prompt('Введите обязательную статью расходов', 'пицца');  
+            } while (isNumber(expense));     
             do {
-              count = +prompt('Во сколько это обойдется?');  
+              count = +prompt('Во сколько это обойдется?', 7000);  
             } while(!isNumber(count));
             appData.expenses[expense] = +count;
         }
@@ -72,12 +91,25 @@ let appData = { // объект, содержащий все созданные 
             return('Что-то пошло не так');
         }
     },
+    getInfoDeposit: function() { // спрашиваем доп инфу о депозите
+        if(appData.deposit){
+            do {
+                appData.percentDeposit = prompt('Какой годовой процент?', 10);
+                appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+            } while(!isNumber(appData.percentDeposit) || !isNumber(appData.moneyDeposit));    
+        }
+    },
+    calcSaveMoney: function() { // метод умножает период на месячный бюджет
+        return appData.budgetMonth * appData.period;
+    }  
 };
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
 appData.getTargetMonth();
 appData.getStatusIncome();
+appData.getInfoDeposit();
+appData.calcSaveMoney();
 
 if (appData.month < 0) {
     console.log('Цель не будет достигнута');
@@ -85,11 +117,21 @@ if (appData.month < 0) {
     console.log('Цель осуществима');
 }
 
+for(let i = 0; i < appData.addExpenses.length; i++) {
+    appData.addExpenses[i][0].toUpperCase();  
+}
+console.log(appData.addExpenses.join(', '));
+
 console.log(appData.getStatusIncome());
 console.log('Рассходы за месяц', +appData.expensesMonth);
 console.log('Месяцев, что бы накопить', appData.mission, 'будет',  Math.ceil(appData.month));
 console.log('Бюджет на 1 день:', Math.floor(appData.budgetDay));
 
-for(let item in appData) {
+
+
+
+for(let item in appData) { // цикл, перебирающий все данные в объекте appData
     console.log('Наша программа включает в себя данные:', item, appData[item]);
 }
+
+// console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSaveMoney());
