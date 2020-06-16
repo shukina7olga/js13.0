@@ -117,10 +117,16 @@ if (appData.month < 0) {
     console.log('Цель осуществима');
 }
 
-for(let i = 0; i < appData.addExpenses.length; i++) {
-    appData.addExpenses[i][0].toUpperCase();  
-}
-console.log(appData.addExpenses.join(', '));
+const forStr = function() {
+    let newStr = [];
+    for(let i = 0; i < appData.addExpenses.length; i++) {
+        newStr[i] = appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].slice(1);
+        console.log(newStr[i]);
+    }
+    console.log(newStr.join(', '));
+};
+forStr();
+
 
 console.log(appData.getStatusIncome());
 console.log('Рассходы за месяц', +appData.expensesMonth);
