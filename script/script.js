@@ -7,20 +7,28 @@ let arr = []; // создаем массив
 
         if(arr[i] === '') { // если  имя не введено
             arr[i] = prompt('Введите число').trim(); 
-        }
-        
+        }      
     }
 console.log(arr, typeof arr);
 
-arr.forEach((item) => {
-    if (item.startsWith('2') || item.startsWith('4')) {
-      console.log('Число начинающиеся на 2 или 4: ', item, typeof item);
+for(let i; i < arr.length; i++){
+    if (arr[i].startsWith('2') || arr[i].startsWith('4')) {
+      console.log('Число начинающиеся на 2 или 4: ', arr[i], typeof arr[i]);
     }
-  });
+ }
 
-//let i;
-//while( i >= 100) {
-//    i++;
+/*
+for(let item in arr){
+    parseInt(arr[item]);
+}
+
+
+  
+
+
+
+
+
 for (let i = 2; i <= 100; i++) { // Для всех i...
 
     for (let j = 2; j < i; j++) { // проверить, делится ли число..
@@ -32,7 +40,11 @@ for (let i = 2; i <= 100; i++) { // Для всех i...
   
     console.log( arr[i] ); // простое число
 }
-//}
+
+
+//let i;
+//while( i >= 100) {
+//    i++;
 /*
 let arr = ['634', '234', '4574', '32', '234', '8490', '32',];
 
