@@ -24,6 +24,7 @@ let appData = { // объект, содержащий все созданные 
     budgetDay: 0,
     budgetMonth: 0,
     expensesMonth: 0, //сумма всех обязательных расходов за месяц
+    month: 0,
     asking: function(){ // метод, спрашивающий у пользователя возможные расходы, депозит, обязательные расходы // НИЧЕГО НЕ ВОЗВРАЩАЕТ, А ДОБАВЛЯЕТ ЗНАЧЕНИЕ В ОБЪЕКТ
         let addExpenses  = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
         appData.addExpenses = addExpenses.toLowerCase().split(',');
@@ -43,10 +44,7 @@ let appData = { // объект, содержащий все созданные 
         //если let expenses = 'Медведь'
         //то appData[expenses] = 'Бурый'
         //в объект запишется - appData = {'Медведь': 'Бурый'}
-
-
     },
-  
     getExpensesMonth: function() { //сумма всех обязательных расходов за месяц
         for (let item in appData.expenses) {
             appData.expensesMonth += appData.expenses[item];
@@ -58,7 +56,10 @@ let appData = { // объект, содержащий все созданные 
         appData.budgetDay =  Math.floor(appData.budgetMonth) / 30;
     },
     getTargetMonth: function() { // сколько месяцев надо что бы накопить
-        return appData.mission / appData.budget.Month;
+        appData.month = appData.mission / appData.budgetMonth;
+        console.log('цель накопить', appData.mission, typeof appData.mission);
+        console.log('бюджет на месяц', appData.budgetMonth, typeof appData.budgetMonth);
+        return Math.ceil(appData.month);
     },
     getStatusIncome: function() {
         if (appData.budgetDay > 1200) {
@@ -72,22 +73,23 @@ let appData = { // объект, содержащий все созданные 
         }
     },
 };
-
 appData.asking();
 appData.getExpensesMonth();
 appData.getBudget();
 appData.getTargetMonth();
 appData.getStatusIncome();
 
-if (appData.mission / appData.budget.Month < 0) {
+if (appData.month < 0) {
     console.log('Цель не будет достигнута');
 } else {
     console.log('Цель осуществима');
 }
 
-
-
 console.log(appData.getStatusIncome());
 console.log('Рассходы за месяц', +appData.expensesMonth);
-console.log('Месяцев, что бы накопить', appData.mission, 'будет', Math.ceil(appData.mission / appData.budget.Month));
+console.log('Месяцев, что бы накопить', appData.mission, 'будет',  Math.ceil(appData.month));
 console.log('Бюджет на 1 день:', Math.floor(appData.budgetDay));
+
+for(let item in appData) {
+    console.log('Наша программа включает в себя данные:', item, appData[item]);
+}
