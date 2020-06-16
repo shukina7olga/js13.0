@@ -13,33 +13,39 @@ const start = function() {
 start();
 
 let appData = { // объект, содержащий все созданные переменные
-    income: {},
+    income: {}, // название доп дохода
     addIncome: [], // дополнит доходы
-    expenses: {}, //дополнительные рассходы
-    addExpenses: [], // возможные рассходы
+    expenses: {}, //дополнительные расходы
+    addExpenses: [], // возможные расходы
     deposit: false,
     mission: 50000,
     period: 5,
-    asking: function(){ // метод, спрашивающий у пользоват
+    asking: function(){ // метод, спрашивающий у пользоват// НИЧЕГО НЕ ВОЗВРАЩАЕТ, А ДОБАВЛЯЕТ ЗНАЧЕНИЕ В ОБЪЕКТ
         let addExpenses  = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
         appData.addExpenses = addExpenses.toLowerCase().split(',');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
+        let expense;
+        let count;
+        for (let i = 0; i < 2; i++) {
+            expense = prompt('Введите обязательную статью расходов');    
+            do {
+              count = +prompt('Во сколько это обойдется?');  
+            } while(!isNumber(count));
+            appData.expenses[expense] = +count;
+        }
+        console.log(appData.expenses);
+        console.log(appData.expenses);
+
     },
     budget: {},
     budgetDay: 0,
     budgetMonth: 0,
     expensesMonth: 0,
-    getExpensesMonth: function() { //сумма всех обязательных расходов за мес
-        let sum = 0;
-        let count;
-        for (let i = 0; i < 2; i++) {
-            appData.expenses[i] = prompt('Введите обязательную статью расходов');
-            do {
-                count = +prompt('Во сколько это обойдется?');
-            } while(!isNumber(count));
-            sum += count; 
+    getExpensesMonth: function() { //сумма всех обязательных расходов за месяц
+        let sumEx;
+        for (let item in appData.expenses) {
+            appData.expensesMonth += appData.expenses[item];
         }
-        return sum;
     },
     getAccumulatedMonth: function(money, expensesAmount) { //накопления за месяц
         return money - expensesAmount;
@@ -58,18 +64,17 @@ let appData = { // объект, содержащий все созданные 
             return('Что-то пошло не так');
         }
     },
-    
-
 };
+appData.asking();
 
 let expensesAmount,
     accumulatedMonth,   
     month;
-    
-appData.asking();
+
+
 expensesAmount = appData.getExpensesMonth();
 accumulatedMonth = appData.getAccumulatedMonth(money, expensesAmount);
-month = appData.getTargetMonth(appData.mission, accumulatedMonth);
+month = appData.getTargetMonth(parseFloat(appData.mission), accumulatedMonth);
 if (month < 0) {
     console.log('Цель не будет достигнута');
 } else {
@@ -77,6 +82,7 @@ if (month < 0) {
 }
 
 appData.budgetDay = accumulatedMonth / 30;
+
 
 console.log(appData.getStatusIncome());
 console.log('Рассходы за месяц', +expensesAmount);
