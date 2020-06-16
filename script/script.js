@@ -44,7 +44,7 @@ let appData = { // объект, содержащий все созданные 
         do{
             addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую', 'Еда, Вода, ЖКХ');        
         } while (isNumber(addExpenses));    
-        appData.addExpenses = addExpenses.toLowerCase().split(',');
+        appData.addExpenses = addExpenses.toLowerCase().split(', ');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
         let expense;
         let count;
@@ -61,8 +61,8 @@ let appData = { // объект, содержащий все созданные 
         //  объект appData = {} / можно  прописать ключ так appData.expenses = ... /а можно так let expenses = ... appData[expenses] = ..
         // при этом значение переменной expenses будет передано как ключ
         //если let expenses = 'Медведь'
-        //то appData[expenses] = 'Бурый'
-        //в объект запишется - appData = {'Медведь': 'Бурый'}
+        //то appData[expenses] = 'Белый'
+        //в объект запишется - appData = {'Медведь': 'Белый'}
     },
     getExpensesMonth: function() { //сумма всех обязательных расходов за месяц
         for (let item in appData.expenses) {
@@ -117,23 +117,24 @@ if (appData.month < 0) {
     console.log('Цель осуществима');
 }
 
-const forStr = function() {
-    let newStr = [];
-    for(let i = 0; i < appData.addExpenses.length; i++) {
-        newStr[i] = appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].slice(1);
-        console.log(newStr[i]);
-    }
-    console.log(newStr.join(', '));
-};
-forStr();
+
+let newStr = [];
+for(let i = 0; i < appData.addExpenses.length; i++) { 
+    newStr[i] = appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].substr(1);
+    console.log(newStr[i]);
+}
+console.log(newStr.join(', ')); // метод делает из массива - строку
+//метод toUpperCase() возвращает значение строки 
+//Содержимое строки в JavaScript нельзя изменить!
+//Нельзя просто взять символ посередине и заменить его. Как только строка создана — она такая навсегда.
+//   В новый массив записали => певая буква в верхнем регистре + строка со 2го элемента
+// была проблема работы цикла! тк в addExpenses.toLowerCase().split(', ')  было без пробела split(',') и 0 символом считывался именно пробел
 
 
 console.log(appData.getStatusIncome());
 console.log('Рассходы за месяц', +appData.expensesMonth);
 console.log('Месяцев, что бы накопить', appData.mission, 'будет',  Math.ceil(appData.month));
 console.log('Бюджет на 1 день:', Math.floor(appData.budgetDay));
-
-
 
 
 for(let item in appData) { // цикл, перебирающий все данные в объекте appData
