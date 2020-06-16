@@ -13,14 +13,18 @@ const start = function() {
 start();
 
 let appData = { // объект, содержащий все созданные переменные
-    income: {}, // название доп дохода
-    addIncome: [], // дополнит доходы
-    expenses: {}, //дополнительные расходы
+    income: {}, // название доп дохода . не использ
+    addIncome: [], // дополнит доходы . не использ
+    expenses: {}, //обязательные расходы . объект
     addExpenses: [], // возможные расходы
-    deposit: false,
-    mission: 50000,
+    deposit: false, // депозит в банке
+    mission: 50000, // цель накопить денег
     period: 5,
-    asking: function(){ // метод, спрашивающий у пользоват// НИЧЕГО НЕ ВОЗВРАЩАЕТ, А ДОБАВЛЯЕТ ЗНАЧЕНИЕ В ОБЪЕКТ
+    budget: {},
+    budgetDay: 0,
+    budgetMonth: 0,
+    expensesMonth: 0, //сумма всех обязательных расходов за месяц
+    asking: function(){ // метод, спрашивающий у пользователя возможные расходы, депозит, обязательные расходы // НИЧЕГО НЕ ВОЗВРАЩАЕТ, А ДОБАВЛЯЕТ ЗНАЧЕНИЕ В ОБЪЕКТ
         let addExpenses  = prompt('Перечислите возможные расходы за рассчитываемый период через запятую');
         appData.addExpenses = addExpenses.toLowerCase().split(',');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
@@ -33,25 +37,28 @@ let appData = { // объект, содержащий все созданные 
             } while(!isNumber(count));
             appData.expenses[expense] = +count;
         }
-        console.log(appData.expenses);
-        console.log(appData.expenses);
+        console.log(appData.expenses, appData.expenses[expense], typeof appData.expenses[expense]); // так смотрим значение под ключом!
+        //  объект appData = {} / можно  прописать ключ так appData.expenses = ... /а можно так let expenses = ... appData[expenses] = ..
+        // при этом значение переменной expenses будет передано как ключ
+        //если let expenses = 'Медведь'
+        //то appData[expenses] = 'Бурый'
+        //в объект запишется - appData = {'Медведь': 'Бурый'}
+
 
     },
-    budget: {},
-    budgetDay: 0,
-    budgetMonth: 0,
-    expensesMonth: 0,
+  
     getExpensesMonth: function() { //сумма всех обязательных расходов за месяц
-        let sumEx;
         for (let item in appData.expenses) {
             appData.expensesMonth += appData.expenses[item];
         }
     },
-    getAccumulatedMonth: function(money, expensesAmount) { //накопления за месяц
-        return money - expensesAmount;
+    getBudget: function() { //бюджет на месяц и на день
+        appData.budget = money;
+        appData.budgetMonth = appData.budget - appData.expensesMonth; 
+        appData.budgetDay =  Math.floor(appData.budgetMonth) / 30;
     },
-    getTargetMonth: function(mission, accumulatedMonth) { // результат месячного накопления
-        return mission / accumulatedMonth;
+    getTargetMonth: function() { // сколько месяцев надо что бы накопить
+        return appData.mission / appData.budget.Month;
     },
     getStatusIncome: function() {
         if (appData.budgetDay > 1200) {
@@ -65,26 +72,22 @@ let appData = { // объект, содержащий все созданные 
         }
     },
 };
+
 appData.asking();
+appData.getExpensesMonth();
+appData.getBudget();
+appData.getTargetMonth();
+appData.getStatusIncome();
 
-let expensesAmount,
-    accumulatedMonth,   
-    month;
-
-
-expensesAmount = appData.getExpensesMonth();
-accumulatedMonth = appData.getAccumulatedMonth(money, expensesAmount);
-month = appData.getTargetMonth(parseFloat(appData.mission), accumulatedMonth);
-if (month < 0) {
+if (appData.mission / appData.budget.Month < 0) {
     console.log('Цель не будет достигнута');
 } else {
     console.log('Цель осуществима');
 }
 
-appData.budgetDay = accumulatedMonth / 30;
 
 
 console.log(appData.getStatusIncome());
-console.log('Рассходы за месяц', +expensesAmount);
-console.log('Месяцев, что бы накопить', appData.mission, 'будет', Math.ceil(month));
+console.log('Рассходы за месяц', +appData.expensesMonth);
+console.log('Месяцев, что бы накопить', appData.mission, 'будет', Math.ceil(appData.mission / appData.budget.Month));
 console.log('Бюджет на 1 день:', Math.floor(appData.budgetDay));
