@@ -177,17 +177,3 @@ document.addEventListener('DOMContentLoaded', function() {
     // console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSaveMoney());
 
 });
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
