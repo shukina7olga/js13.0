@@ -1,11 +1,11 @@
-document.addEventListener('DOMContentLoaded', function() {
+//document.addEventListener('DOMContentLoaded', function() {
     'use strict';
     let start = document.getElementById('start'),
         incomePlus = document.getElementsByTagName('button')[0],
         expensesPlus = document.getElementsByTagName('button')[1],
         checkbox = document.querySelector('#deposit-check'), // с диезом - ID
         additionalIncome = document.querySelectorAll('.additional_income-item'), // с точкой - КЛАСС
-        // поля ввода слева
+        // поля ввода справа
         budgetMonthValue = document.querySelector('.budget_month-value'),
         budgetDayValue = document.querySelector('.budget_day-value'),
         expensesMonthValue = document.querySelector('.expenses_month-value'),
@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         salaryAmount = document.querySelector('.salary-amount'),
 
-        //itemIncome = document.querySelector('input.income-title'),
+        itemIncome = document.querySelector('input.income-title'),
         incomeItems = document.querySelectorAll('.income-items'),
 
-        //itemExpense = document.querySelector('input.expenses-title'),
+        itemExpense = document.querySelector('input.expenses-title'),
         expensesItems = document.querySelectorAll('.expenses-items'),
     
         addExpenses = document.querySelector('.additional_expenses-item'),
@@ -54,11 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             appData.budget = salaryAmount.value;
 
-            appData.getIncome();
             appData.getExpenses();
-            appData.getBudget();
-
+            appData.getIncome();
             appData.getExpensesMonth();
+            appData.getBudget();
             
             appData.showResult();
         },
@@ -77,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
         },
-        addIncomeBlock: function(){
+        addIncomeBlock: function(){ // для добавления новых полей при нажатии плюса
             
             let cloneIncomeItem = incomeItems[0].cloneNode(true);// взяли родителя .income-items
                 incomeItems[0].parentNode.insertBefore(cloneIncomeItem, incomePlus);
@@ -89,8 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         getIncome: function(){
             incomeItems.forEach(function(item){ // перебирать будем элементы
-                let itemIncome = item.querySelector('.income-title').value;
-                let cashIncome = item.querySelector('.income-amount').value;
+                let itemIncome = +item.querySelector('input.income-title').value;
+                let cashIncome = +item.querySelector('.income-amount').value;
 
                 if(itemIncome !== '' && cashIncome !== ''){
                     appData.income[itemIncome] = cashIncome;
@@ -99,8 +98,8 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         getExpenses: function(){
             expensesItems.forEach(function(item){ // перебирать будем элементы
-                let itemExpenses = item.querySelector('.expenses-title').value;
-                let cashExpenses = item.querySelector('.expenses-amount').value;
+                let itemExpenses = +item.querySelector('input.expenses-title').value;
+                let cashExpenses = +item.querySelector('.expenses-amount').value;
 
                 if(itemExpenses !== '' && cashExpenses !== ''){
                     appData.expenses[itemExpenses] = cashExpenses;
@@ -210,4 +209,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // console.log(appData.percentDeposit, appData.moneyDeposit, appData.calcSaveMoney());
 
-});
+//});
