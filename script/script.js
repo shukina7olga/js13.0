@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         budgetMonth: 0,
         expensesMonth: 0, //сумма всех обязательных расходов за месяц
         start: function() {
-            appData.budget = +salaryAmount.value;
+            appData.budget = +salaryAmount.value.replace(/^\d+$/);
 
             appData.getExpenses();
             appData.getIncome();
@@ -92,9 +92,11 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         getIncome: function(){
             incomeItems.forEach(function(item, index){ // перебирать будем элементы
-                let itemIncome = item.querySelector('input.income-title').value;
+                let itemIncome = /^[а-яё]+$/.item.querySelector('input.income-title').value;
                 let cashIncome = +item.querySelector('.income-amount').value;
-
+                //cashIncome.value = /^\d+$/;
+                //itemIncome = "";
+                //cashIncome = "";
                 if(itemIncome !== '' && cashIncome !== ''){
                     appData.income[itemIncome + index] = cashIncome;
                 }
@@ -108,7 +110,9 @@ document.addEventListener('DOMContentLoaded', function() {
             expensesItems.forEach(function(item, index){ // перебирать будем элементы
                 let itemExpenses = item.querySelector('input.expenses-title').value;
                 let cashExpenses = +item.querySelector('.expenses-amount').value;
-
+                //cashExpenses.value = cashExpenses.value.replace(/^\d+$/);
+                //itemExpenses = "";
+                //cashExpenses = "";
                 if(itemExpenses !== '' && cashExpenses !== ''){
                     appData.expenses[itemExpenses + index] = cashExpenses;
                 }
