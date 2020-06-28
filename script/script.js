@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
             targetMonthValue.value = this.getTargetMonth();
             incomePeriodValue.value = this.calcPeriod();
             periodSelect.addEventListener('input', function() {
-                incomePeriodValue.value = this.calcPeriod();
+                incomePeriodValue.value = appData.calcPeriod();
             });
         },
         addExpensesBlock: function(){
@@ -99,17 +99,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            for(let key in appData.income){
-                appData.incomeMonth += +appData.income[key];
+            for(let key in this.income){
+                this.incomeMonth += +this.income[key];
             }
         },
         getExpenses: function(){
             expensesItems.forEach(function(item, index){ // перебирать будем элементы
                 let itemExpenses = item.querySelector('input.expenses-title').value;
                 let cashExpenses = +item.querySelector('.expenses-amount').value;
-                //cashExpenses.value = cashExpenses.value.replace(/^\d+$/);
                 if(itemExpenses !== '' && cashExpenses !== ''){
-                    this.expenses[itemExpenses + index] = cashExpenses;
+                    appData.expenses[itemExpenses + index] = cashExpenses;
                 }
             });
         },
@@ -126,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
             additionalIncomeItem.forEach(function(item){
                 let itemValue = item.value.trim();
                 if(itemValue !== ''){
-                    this.addIncome.push(itemValue);
+                    appData.addIncome.push(itemValue);
                 }
             });
         },
@@ -163,7 +162,34 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         calcPeriod: function() { // метод умножает период на месячный бюджет
             return this.budgetMonth * periodSelect.value;
-        }  
+        },
+        reset: function() {
+            
+            
+            let cleanInput = document.querySelectorAll('input[type=text]');
+            if(start.disabled === false){
+                cleanInput = '';
+                //cleanInput.disabled = true;
+                this.income = {}; // название доп дохода 
+                this.addIncome = []; // дополнит доходы 
+                this.incomeMonth = 0;
+                this.expenses = {}; //обязательные расходы . объект
+                this.addExpenses = []; // возможные расходы
+                this.deposit = false; // депозит в банке
+                this.percentDeposit = 0; // процент депозита
+                this.moneyDeposit = 0; // сколько человек денег заложил
+                this.budget = 0;
+                this.budgetDay = 0;
+                this.budgetMonth = 0;
+                this.expensesMonth = 0; //сумма всех обязательных расходов за месяц
+                periodSelect.addEventListener('input', function() { // для того,чтобы цифра менялась на полосе на 1
+                    periodAmount.innerHTML = 1;
+                });
+                //start.style.display = start.style.display === 'none';
+                start.innerHTML = 'Сброс';
+
+            }
+        },
     };
 
     
@@ -176,33 +202,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    let btnStart =  appData.start.bind(appData); // привязываем контекст вызова функции start к  объекту appData 
-    start.addEventListener('click', btnStart); //
     
 
-    //start.addEventListener('click', appData.start); start.addEventListener('click', appData.start.bind(appData));
+    start.addEventListener('click', appData.start.bind(appData));
 
-    expensesPlus.addEventListener('click', this.addExpensesBlock);
-    incomePlus.addEventListener('click', this.addIncomeBlock);
+    expensesPlus.addEventListener('click', appData.addExpensesBlock);
+    incomePlus.addEventListener('click', appData.addIncomeBlock);
     periodSelect.addEventListener('input', function() { // для того,чтобы цифра менялась на полосе
         periodAmount.innerHTML = periodSelect.value;
     });
 
 
-
-    let newStr = [];
-    for(let i = 0; i < this.addExpenses.length; i++) { 
-        newStr[i] = this.addExpenses[i][0].toUpperCase() + this.addExpenses[i].substr(1);
-        console.log(newStr[i]);
-    }
-    console.log(newStr.join(', ')); // метод делает из массива - строку
-    //метод toUpperCase() возвращает значение строки 
-    //Содержимое строки в JavaScript нельзя изменить!
-    //Нельзя просто взять символ посередине и заменить его. Как только строка создана — она такая навсегда.
-    //   В новый массив записали => певая буква в верхнем регистре + строка со 2го элемента
-    // была проблема работы цикла! тк в addExpenses.toLowerCase().split(', ')  
-    //было без пробела split(',') и 0 символом считывался именно пробел
-
+    start.addEventListener('click', appData.reset.bind(appData));
 
 
 
