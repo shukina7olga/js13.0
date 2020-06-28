@@ -48,26 +48,26 @@ document.addEventListener('DOMContentLoaded', function() {
         budgetMonth: 0,
         expensesMonth: 0, //сумма всех обязательных расходов за месяц
         start: function() {
-            appData.budget = +salaryAmount.value;
+            this.budget = +salaryAmount.value;
 
-            appData.getExpenses();
-            appData.getIncome();
-            appData.getExpensesMonth();
-            appData.getBudget();
-            appData.getAddExpenses();
-            appData.getAddIncome();
-            appData.showResult();
+            this.getExpenses();
+            this.getIncome();
+            this.getExpensesMonth();
+            this.getBudget();
+            this.getAddExpenses();
+            this.getAddIncome();
+            this.showResult();
         },
         showResult: function(){
-            budgetMonthValue.value = appData.budgetMonth;
-            budgetDayValue.value = Math.floor(appData.budgetDay);
-            expensesMonthValue.value = appData.expensesMonth;
-            additionalExpensesValue.value = appData.addExpenses.join(', ');
-            additionalIncomeValue.value = appData.addIncome.join(', ');
-            targetMonthValue.value = appData.getTargetMonth();
-            incomePeriodValue.value = appData.calcPeriod();
+            budgetMonthValue.value = this.budgetMonth;
+            budgetDayValue.value = Math.floor(this.budgetDay);
+            expensesMonthValue.value = this.expensesMonth;
+            additionalExpensesValue.value = this.addExpenses.join(', ');
+            additionalIncomeValue.value = this.addIncome.join(', ');
+            targetMonthValue.value = this.getTargetMonth();
+            incomePeriodValue.value = this.calcPeriod();
             periodSelect.addEventListener('input', function() {
-                incomePeriodValue.value = appData.calcPeriod();
+                incomePeriodValue.value = this.calcPeriod();
             });
         },
         addExpensesBlock: function(){
@@ -94,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
             incomeItems.forEach(function(item, index){ // перебирать будем элементы
                 let itemIncome = item.querySelector('input.income-title').value;
                 let cashIncome = +item.querySelector('.income-amount').value;
-
                 if(itemIncome !== '' && cashIncome !== ''){
                     appData.income[itemIncome + index] = cashIncome;
                 }
@@ -108,9 +107,9 @@ document.addEventListener('DOMContentLoaded', function() {
             expensesItems.forEach(function(item, index){ // перебирать будем элементы
                 let itemExpenses = item.querySelector('input.expenses-title').value;
                 let cashExpenses = +item.querySelector('.expenses-amount').value;
-
+                //cashExpenses.value = cashExpenses.value.replace(/^\d+$/);
                 if(itemExpenses !== '' && cashExpenses !== ''){
-                    appData.expenses[itemExpenses + index] = cashExpenses;
+                    this.expenses[itemExpenses + index] = cashExpenses;
                 }
             });
         },
@@ -119,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addExpenses.forEach(function(item){
                 item = item.trim();
                 if(item !== ''){
-                    appData.addExpenses.push(item);
+                    this.addExpenses.push(item);
                 }
             });
         },
@@ -127,46 +126,47 @@ document.addEventListener('DOMContentLoaded', function() {
             additionalIncomeItem.forEach(function(item){
                 let itemValue = item.value.trim();
                 if(itemValue !== ''){
-                    appData.addIncome.push(itemValue);
+                    this.addIncome.push(itemValue);
                 }
             });
         },
         getExpensesMonth: function() { //сумма всех обязательных расходов за месяц
-            for (let item in appData.expenses) {
-                appData.expensesMonth += appData.expenses[item];
+            for (let item in this.expenses) {
+                this.expensesMonth += this.expenses[item];
             }
         },
         getBudget: function() { //бюджет на месяц и на день
-            appData.budgetMonth = appData.budget + appData.incomeMonth - appData.expensesMonth; 
-            appData.budgetDay =  Math.floor(appData.budgetMonth) / 30;
+            this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth; 
+            this.budgetDay =  Math.floor(this.budgetMonth) / 30;
         },
         getTargetMonth: function() { // сколько месяцев надо что бы накопить
-            return Math.ceil(targetAmount.value / appData.budgetMonth);
+            return Math.ceil(targetAmount.value / this.budgetMonth);
         },
         getStatusIncome: function() {
-            if (appData.budgetDay > 1200) {
+            if (this.budgetDay > 1200) {
                 return('У вас высокий уровень дохода');
-            } else if (1200 >= appData.budgetDay >= 600) {     //budgetDay > 600 && budgetDay < 1200 
+            } else if (1200 >= this.budgetDay >= 600) {     //budgetDay > 600 && budgetDay < 1200 
                 return('У вас средний уровень дохода');
-            } else if (appData.budgetDay > 600 || appData.budgetDay === 0) {
+            } else if (this.budgetDay > 600 || this.budgetDay === 0) {
                 return('К сожалению, у вас уровень дохода ниже среднего');
-            } else if (appData.budgetDay < 0) {
+            } else if (this.budgetDay < 0) {
                 return('Что-то пошло не так');
             }
         },
         getInfoDeposit: function() { // спрашиваем доп инфу о депозите
-            if(appData.deposit){
+            if(this.deposit){
                 do {
-                    appData.percentDeposit = prompt('Какой годовой процент?', 10);
-                    appData.moneyDeposit = prompt('Какая сумма заложена?', 10000);
-                } while(!isNumber(appData.percentDeposit) || !isNumber(appData.moneyDeposit));    
+                    this.percentDeposit = prompt('Какой годовой процент?', 10);
+                    this.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+                } while(!isNumber(this.percentDeposit) || !isNumber(this.moneyDeposit));    
             }
         },
         calcPeriod: function() { // метод умножает период на месячный бюджет
-            return appData.budgetMonth * periodSelect.value;
+            return this.budgetMonth * periodSelect.value;
         }  
     };
 
+    
     start.disabled = true; // проверка введено ли значение месячного дохода
     salaryAmount.addEventListener('input', function() {
         if (salaryAmount.value) {
@@ -176,25 +176,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    let btnStart =  appData.start.bind(appData); // привязываем контекст вызова функции start к  объекту appData 
+    start.addEventListener('click', btnStart); //
+    
 
-    start.addEventListener('click', appData.start);
+    //start.addEventListener('click', appData.start); start.addEventListener('click', appData.start.bind(appData));
 
-    expensesPlus.addEventListener('click', appData.addExpensesBlock);
-    incomePlus.addEventListener('click', appData.addIncomeBlock);
+    expensesPlus.addEventListener('click', this.addExpensesBlock);
+    incomePlus.addEventListener('click', this.addIncomeBlock);
     periodSelect.addEventListener('input', function() { // для того,чтобы цифра менялась на полосе
         periodAmount.innerHTML = periodSelect.value;
     });
 
-    //if (appData.period < 0) {
-    //    console.log('Цель не будет достигнута');
-    //} else {
-    //    console.log('Цель осуществима');
-    //}
 
 
     let newStr = [];
-    for(let i = 0; i < appData.addExpenses.length; i++) { 
-        newStr[i] = appData.addExpenses[i][0].toUpperCase() + appData.addExpenses[i].substr(1);
+    for(let i = 0; i < this.addExpenses.length; i++) { 
+        newStr[i] = this.addExpenses[i][0].toUpperCase() + this.addExpenses[i].substr(1);
         console.log(newStr[i]);
     }
     console.log(newStr.join(', ')); // метод делает из массива - строку
@@ -206,13 +204,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //было без пробела split(',') и 0 символом считывался именно пробел
 
 
-    //for(let item in appData) { // цикл, перебирающий все данные в объекте appData
-    //    console.log('Наша программа включает в себя данные:', item, appData[item]);
-    //}
 
 
     console.log(appData);
 });
-
-
-
