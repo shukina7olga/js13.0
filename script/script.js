@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     'use strict';
     let start = document.getElementById('start'),
+        cancel = document.getElementById('cancel'),
         incomePlus = document.getElementsByTagName('button')[0],
         expensesPlus = document.getElementsByTagName('button')[1],
         depositСheck = document.querySelector('#deposit-check'), // с диезом - ID
@@ -163,9 +164,11 @@ document.addEventListener('DOMContentLoaded', function() {
         calcPeriod: function() { // метод умножает период на месячный бюджет
             return this.budgetMonth * periodSelect.value;
         },
-        reset: function() {
-            
-            
+        buttons: function(){
+            start.style.display = 'none';
+            cancel.style.display = 'block';
+        },
+        reset: function() {   
             let cleanInput = document.querySelectorAll('input[type=text]');
             if(start.disabled === false){
                 cleanInput = '';
@@ -185,8 +188,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 periodSelect.addEventListener('input', function() { // для того,чтобы цифра менялась на полосе на 1
                     periodAmount.innerHTML = 1;
                 });
-                //start.style.display = start.style.display === 'none';
-                start.innerHTML = 'Сброс';
+              
+                
+                incomeItems[1].remove();
+                incomeItems[2].remove();
+                expensesItems[1].remove();
+                expensesItems[2].remove();
+                salaryAmount = '';
+
 
             }
         },
@@ -196,15 +205,17 @@ document.addEventListener('DOMContentLoaded', function() {
     start.disabled = true; // проверка введено ли значение месячного дохода
     salaryAmount.addEventListener('input', function() {
         if (salaryAmount.value) {
-          start.disabled = false;
+          start.disabled = false;  
         } else {
           start.disabled = true;
         }
     });
 
-    
 
+    
     start.addEventListener('click', appData.start.bind(appData));
+    //start.addEventListener('click', start.style.display = 'none', cancel.style.display = 'block');
+    start.addEventListener('click', appData.buttons.bind(appData));
 
     expensesPlus.addEventListener('click', appData.addExpensesBlock);
     incomePlus.addEventListener('click', appData.addIncomeBlock);
@@ -212,8 +223,10 @@ document.addEventListener('DOMContentLoaded', function() {
         periodAmount.innerHTML = periodSelect.value;
     });
 
+ 
 
-    start.addEventListener('click', appData.reset.bind(appData));
+
+    cancel.addEventListener('click', appData.reset.bind(appData));
 
 
 
