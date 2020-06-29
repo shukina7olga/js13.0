@@ -58,6 +58,12 @@ document.addEventListener('DOMContentLoaded', function() {
             this.getAddExpenses();
             this.getAddIncome();
             this.showResult();
+            incomePlus.disabled = true;
+            expensesPlus.disabled = true;
+            let cleanInput = document.querySelectorAll('input[type="text"]');
+            for (let i = 0; i < cleanInput.length; i++) {
+                cleanInput[i].disabled = true;
+            }
         },
         showResult: function(){
             budgetMonthValue.value = this.budgetMonth;
@@ -217,6 +223,8 @@ document.addEventListener('DOMContentLoaded', function() {
   
             periodSelect.value = 1;
             periodAmount.innerHTML = 1;
+            incomePlus.disabled = false;
+            expensesPlus.disabled = false;
         },
     };
 
