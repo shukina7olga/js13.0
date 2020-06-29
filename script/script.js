@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             addExpenses.forEach(function(item){
                 item = item.trim();
                 if(item !== ''){
-                    this.addExpenses.push(item);
+                    appData.addExpenses.push(item);
                 }
             });
         },
@@ -164,40 +164,59 @@ document.addEventListener('DOMContentLoaded', function() {
         calcPeriod: function() { // метод умножает период на месячный бюджет
             return this.budgetMonth * periodSelect.value;
         },
-        buttons: function(){
+        btnMain: function(){
             start.style.display = 'none';
             cancel.style.display = 'block';
         },
-        reset: function() {   
-            let cleanInput = document.querySelectorAll('input[type=text]');
-            if(start.disabled === false){
-                cleanInput = '';
-                //cleanInput.disabled = true;
-                this.income = {}; // название доп дохода 
-                this.addIncome = []; // дополнит доходы 
-                this.incomeMonth = 0;
-                this.expenses = {}; //обязательные расходы . объект
-                this.addExpenses = []; // возможные расходы
-                this.deposit = false; // депозит в банке
-                this.percentDeposit = 0; // процент депозита
-                this.moneyDeposit = 0; // сколько человек денег заложил
-                this.budget = 0;
-                this.budgetDay = 0;
-                this.budgetMonth = 0;
-                this.expensesMonth = 0; //сумма всех обязательных расходов за месяц
-                periodSelect.addEventListener('input', function() { // для того,чтобы цифра менялась на полосе на 1
-                    periodAmount.innerHTML = 1;
-                });
-              
-                
-                incomeItems[1].remove();
-                incomeItems[2].remove();
-                expensesItems[1].remove();
-                expensesItems[2].remove();
-                salaryAmount = '';
-
-
+        btnMainRevers: function(){
+            start.style.display = 'block';
+            cancel.style.display ='none';
+            if (salaryAmount.value) {
+                start.disabled = false; 
+            } else {
+                start.disabled = true;
             }
+        },
+        reset: function() {   
+            let cleanInput = document.querySelectorAll('input[type="text"]');
+            for (let i = 0; i < cleanInput.length; i++) {
+                cleanInput[i].value = '' ;
+                cleanInput[i].disabled = false;
+            }
+
+            incomeItems = document.querySelectorAll('.income-items');
+            incomeItems.forEach(function(item, index){
+                if(index !==0) {
+                    item.remove();
+                }
+            });
+            expensesItems = document.querySelectorAll('.expenses-items');
+            expensesItems.forEach(function(item, index){
+                if(index !==0) {
+                    item.remove();
+                }
+            });
+            if(incomePlus.style.display === 'none' || expensesPlus.style.display === 'none'){
+                incomePlus.style.display = 'block';
+                expensesPlus.style.display = 'block';
+            }
+            
+            
+            this.income = {}; // название доп дохода 
+            this.addIncome = []; // дополнит доходы 
+            this.incomeMonth = 0;
+            this.expenses = {}; //обязательные расходы . объект
+            this.addExpenses = []; // возможные расходы
+            this.deposit = false; // депозит в банке
+            this.percentDeposit = 0; // процент депозита
+            this.moneyDeposit = 0; // сколько человек денег заложил
+            this.budget = 0;
+            this.budgetDay = 0;
+            this.budgetMonth = 0;
+            this.expensesMonth = 0; //сумма всех обязательных расходов за месяц
+  
+            periodSelect.value = 1;
+            periodAmount.innerHTML = 1;
         },
     };
 
@@ -205,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
     start.disabled = true; // проверка введено ли значение месячного дохода
     salaryAmount.addEventListener('input', function() {
         if (salaryAmount.value) {
-          start.disabled = false;  
+          start.disabled = false; 
         } else {
           start.disabled = true;
         }
@@ -214,8 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
     start.addEventListener('click', appData.start.bind(appData));
-    //start.addEventListener('click', start.style.display = 'none', cancel.style.display = 'block');
-    start.addEventListener('click', appData.buttons.bind(appData));
+    start.addEventListener('click', appData.btnMain.bind(appData));
 
     expensesPlus.addEventListener('click', appData.addExpensesBlock);
     incomePlus.addEventListener('click', appData.addIncomeBlock);
@@ -224,10 +242,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
  
-
-
     cancel.addEventListener('click', appData.reset.bind(appData));
-
+    cancel.addEventListener('click', appData.btnMainRevers.bind(appData));
 
 
     console.log(appData);
