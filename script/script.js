@@ -26,7 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
         additionalExpensesItem = document.querySelector('.additional_expenses-item'), // инпут возможных расходов 
         targetAmount = document.querySelector('.target-amount'), // цель накопить
         periodSelect = document.querySelector('.period-select'),
-        periodAmount = document.querySelector('.period-amount'); // цифра под полоской
+        periodAmount = document.querySelector('.period-amount'), // цифра под полоской
+        depositBank = document.querySelector('.deposit-bank'),
+        depositAmount = document.querySelector('.deposit-amount'),
+        depositPercent = document.querySelector('.deposit-percent');
 
 
 
@@ -241,6 +244,20 @@ document.addEventListener('DOMContentLoaded', function() {
             expensesPlus.disabled = false;
         }
         
+        depositHandler() { // проверяем стоит галочка или нет
+            if(depositСheck.checked) { // галка установлена
+                depositBank.style.display = 'inline-block';
+                depositAmount.style.display = 'inline-block';
+                this.deposit = true;
+            } else {
+                depositBank.style.display = 'none';
+                depositAmount.style.display = 'none';
+                depositBank.value = '';
+                depositAmount.value = '';
+                this.deposit = false;
+            }
+        }
+
         eventsListeners() {
             start.disabled = true; // проверка введено ли значение месячного дохода
             salaryAmount.addEventListener('input', () => {
@@ -263,6 +280,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
             cancel.addEventListener('click', this.reset.bind(this));
             cancel.addEventListener('click', this.btnMainRevers.bind(this));
+
+            depositСheck.addEventListener('change', this.depositHandler.bind(this));
         }
 
     }
