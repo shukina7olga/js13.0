@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.getExpenses();
             this.getIncome();
             this.getExpensesMonth();
+            this.getInfoDeposit();
             this.getBudget();
             this.getAddExpenses();
             this.getAddIncome();
@@ -153,7 +154,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         getBudget() { //бюджет на месяц и на день
-            this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth; 
+            const monthDeposit = this.moneyDeposit * (this.percentDeposit / 100);
+            this.budgetMonth = this.budget + this.incomeMonth - this.expensesMonth + monthDeposit; 
             this.budgetDay =  Math.floor(this.budgetMonth) / 30;
         }
     
@@ -176,8 +178,8 @@ document.addEventListener('DOMContentLoaded', function() {
         getInfoDeposit() { // спрашиваем доп инфу о депозите
             if(this.deposit){
                 do {
-                    this.percentDeposit = prompt('Какой годовой процент?', 10);
-                    this.moneyDeposit = prompt('Какая сумма заложена?', 10000);
+                    this.percentDeposit = depositPercent.value;
+                    this.moneyDeposit = depositAmount.value; // деньги, которые вложили
                 } while(!isNumber(this.percentDeposit) || !isNumber(this.moneyDeposit));    
             }
         }
@@ -244,17 +246,31 @@ document.addEventListener('DOMContentLoaded', function() {
             expensesPlus.disabled = false;
         }
         
+        changePercent() { // узнаем какой банк выбран
+            const valueSelect = this.value;
+            if(valueSelect === 'other'){
+                depositPercent.value = '';
+                depositPercent.style.display = 'inline-block';
+
+            } else {
+                depositPercent.value = valueSelect;
+                depositPercent.style.display = 'none';
+            }
+        }
+        
         depositHandler() { // проверяем стоит галочка или нет
             if(depositСheck.checked) { // галка установлена
                 depositBank.style.display = 'inline-block';
                 depositAmount.style.display = 'inline-block';
                 this.deposit = true;
+                depositBank.addEventListener('change', this.changePercent);
             } else {
                 depositBank.style.display = 'none';
                 depositAmount.style.display = 'none';
                 depositBank.value = '';
                 depositAmount.value = '';
                 this.deposit = false;
+                depositBank.removeEventListener('change', this.changePercent);
             }
         }
 
