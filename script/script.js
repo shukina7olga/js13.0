@@ -71,6 +71,8 @@ document.addEventListener('DOMContentLoaded', function() {
             for (let i = 0; i < cleanInput.length; i++) {
                 cleanInput[i].disabled = true;
             }
+            depositBank.disabled = true;
+            depositСheck.disabled = true;
         }
 
         showResult() {
@@ -244,6 +246,15 @@ document.addEventListener('DOMContentLoaded', function() {
             periodAmount.innerHTML = 1;
             incomePlus.disabled = false;
             expensesPlus.disabled = false;
+
+            depositBank.style.display = 'none';
+            depositAmount.style.display = 'none';
+            depositPercent.style.display = 'none';
+            depositBank.value = '';
+            depositAmount.value = '';
+            depositСheck.checked = false;
+            depositBank.disabled = false;
+            depositСheck.disabled = false;
         }
         
         changePercent() { // узнаем какой банк выбран
@@ -251,6 +262,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if(valueSelect === 'other'){
                 depositPercent.value = '';
                 depositPercent.style.display = 'inline-block';
+                depositPercent.addEventListener('input', () => {
+                    if(depositPercent.value > 100 || depositPercent.value < 0 || !isNumber(depositPercent.value)) {
+                        alert('Процент должен быть числом в диапазоне от 0 до 100');
+                        depositPercent.value = '';
+                    } 
+                });
+     
 
             } else {
                 depositPercent.value = valueSelect;
